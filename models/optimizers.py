@@ -20,7 +20,7 @@ from typing import Callable
 import gin
 import gin.tf
 import tensorflow.compat.v1 as tf  # tf
-from tensorflow_addons.optimizers import MovingAverage
+from tensorflow.keras.optimizers import Optimizer
 
 
 @gin.configurable
@@ -142,8 +142,7 @@ def create_moving_average_optimizer(optimizer,
   Returns:
     A parameterless function that returns the configured Momentum Optimizer.
   """
-  return MovingAverage(
-      optimizer, average_decay=average_decay)
+  return Optimizer("ema_optimizer", weight_decay=average_decay)
 
 
 @gin.configurable(denylist=['optimizer'])
